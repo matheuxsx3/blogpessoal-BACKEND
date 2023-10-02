@@ -16,7 +16,7 @@ public class Postagem {
 
     @NotBlank(message = "O atributo título é obrigatório!")
     @Size(min = 1, max = 100, message = "O atributo título deve ter no mínimo 1 caractere e no maximo 100!")
-    private String ttulo;
+    private String titulo;
     @NotBlank(message = "O atributo texto é obrigatório!")
     @Size(min = 1, max = 1000, message = "O atributo titulo deve ter no mínimo 1 caractere e no maximo 1000!")
     private String texto;
@@ -31,12 +31,12 @@ public class Postagem {
         this.id = id;
     }
 
-    public String getTtulo() {
-        return ttulo;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTtulo(String ttulo) {
-        this.ttulo = ttulo;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getTexto() {
