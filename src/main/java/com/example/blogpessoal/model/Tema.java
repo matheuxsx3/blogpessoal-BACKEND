@@ -15,8 +15,8 @@ public class Tema {
     @NotNull(message = "A descrição não pode ser nula.")
     private String descricao;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tema",cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties("tema")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idTema",cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("idTema")
     private List<Postagem> postagens;
 
     public Tema(long id, String descricao) {

@@ -47,7 +47,7 @@ public class PostagemControler {
     @PostMapping
     public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem) {
 
-        if (temaRepository.existsById(postagem.getTema().getId())) {
+        if (temaRepository.existsById(postagem.getIdTema().getId())) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(postagemRepository.save(postagem));
         }
@@ -58,7 +58,7 @@ public class PostagemControler {
     @PutMapping
     public ResponseEntity<Postagem> put(@Valid @RequestBody Postagem postagem) {
         if (postagemRepository.existsById(postagem.getId())) {
-            if (temaRepository.existsById(postagem.getTema().getId())) {
+            if (temaRepository.existsById(postagem.getIdTema().getId())) {
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(postagemRepository.save(postagem));
             }

@@ -1,12 +1,13 @@
 package com.example.blogpessoal.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -17,17 +18,25 @@ public class Usuario {
     @NotBlank(message = "nomeUsuario não pode ser nula")
     @Size(min = 6, max = 255, message = "nomeUsuario deve conter de 6 a 255 caracteres.")
     private String nome;
-    @DateTimeFormat
-    private Date dataNascimentoUsuario;
     @NotBlank(message = "apelidoUsuario não pode ser nula")
     @Size(min = 6, max = 255, message = "apelidoUsuario deve conter de 6 a 255 caracteres.")
-    private String apelidoUsuario;
+    private String usuario;
     @Email
     @NotNull(message = "emailUsuario não pode ser nula")
-    private String emailUsuario;
+    private String email;
     @NotBlank(message = "senha não pode ser nula")
     @Size(min = 6, max = 255, message = "Senha deve conter de 6 a 255 caracteres.")
-    private String senhaUsuario;
+    private String senha;
+    @Size(max = 5000, message = "a foto não pode ultrapassar 5000 caracteres")
+    private String foto;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "idUsuario",cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("idUsuario")
+    private List<Postagem> postagens;
+
+
+
+
 
     public Long getId() {
         return id;
@@ -45,35 +54,43 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public Date getDataNascimentoUsuario() {
-        return dataNascimentoUsuario;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setDataNascimentoUsuario(Date dataNascimentoUsuario) {
-        this.dataNascimentoUsuario = dataNascimentoUsuario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getApelidoUsuario() {
-        return apelidoUsuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setApelidoUsuario(String apelidoUsuario) {
-        this.apelidoUsuario = apelidoUsuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getEmailUsuario() {
-        return emailUsuario;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setEmailUsuario(String emailUsuario) {
-        this.emailUsuario = emailUsuario;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public String getSenhaUsuario() {
-        return senhaUsuario;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setSenhaUsuario(String senhaUsuario) {
-        this.senhaUsuario = senhaUsuario;
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public List<Postagem> getPostagens() {
+        return postagens;
+    }
+
+    public void setPostagens(List<Postagem> postagens) {
+        this.postagens = postagens;
     }
 }

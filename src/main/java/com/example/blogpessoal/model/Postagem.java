@@ -25,7 +25,10 @@ public class Postagem {
     private LocalDateTime data;
     @ManyToOne
     @JsonIgnoreProperties("postagens")
-    private Tema tema;
+    private Tema idTema;
+    @ManyToOne
+    @JsonIgnoreProperties("postagens")
+    private Usuario idUsuario;
 
     public long getId() {
         return id;
@@ -59,12 +62,20 @@ public class Postagem {
         this.data = data;
     }
 
-    public Tema getTema() {
-        return tema;
+    public Tema getIdTema() {
+        return idTema;
     }
 
-    public void setTema(Tema tema) {
-        this.tema = tema;
+    public void setIdTema(Tema idTema) {
+        this.idTema = idTema;
+    }
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
 
