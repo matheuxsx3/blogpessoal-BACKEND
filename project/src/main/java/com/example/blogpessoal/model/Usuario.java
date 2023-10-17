@@ -16,10 +16,10 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "nomeUsuario não pode ser nula")
-    @Size(min = 6, max = 255, message = "nomeUsuario deve conter de 6 a 255 caracteres.")
+    @Size(min = 2, max = 50, message = "nomeUsuario deve conter de 2 a 50 caracteres.")
     private String nome;
     @NotBlank(message = "apelidoUsuario não pode ser nula")
-    @Size(min = 6, max = 255, message = "apelidoUsuario deve conter de 6 a 255 caracteres.")
+    @Size(min = 2, max = 50, message = "apelidoUsuario deve conter de 2 a 50 caracteres.")
     private String usuario;
     @Email
     @NotNull(message = "emailUsuario não pode ser nula")
@@ -34,9 +34,15 @@ public class Usuario {
     @JsonIgnoreProperties("idUsuario")
     private List<Postagem> postagens;
 
-
-
-
+    public Usuario(Long id, String nome, String usuario, String email, String senha, String foto) {
+        this.id = id;
+        this.nome = nome;
+        this.usuario = usuario;
+        this.email = email;
+        this.senha = senha;
+        this.foto = foto;
+    }
+    public Usuario(){}
 
     public Long getId() {
         return id;
