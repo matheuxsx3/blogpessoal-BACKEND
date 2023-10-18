@@ -5,9 +5,9 @@ WORKDIR /workspace/app
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
-COPY src .
+COPY src src
 
-RUN chmod -R 777 ./mvnw
+RUN chmod -R 777 ./project/mvnw
 
 RUN ./mvnw install -DskipTests
 
