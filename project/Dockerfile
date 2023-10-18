@@ -7,7 +7,7 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 
-RUN chmod -R 777 ./project/mvnw
+RUN chmod -R 777 .mvnw
 
 RUN ./mvnw install -DskipTests
 
