@@ -5,7 +5,7 @@ WORKDIR /workspace/app
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
-COPY src /workspace/app/project/src
+COPY src .
 
 RUN chmod -R 777 ./mvnw
 
