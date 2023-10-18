@@ -51,31 +51,43 @@ public class ControllerTest {
     @DisplayName("não deve permitir duplicar usuarios")
     public void deveRejeitarCadastroUsuarioDuplicado() {
         usuarioService.cadastrarUsuario(new Usuario(0L, "aleatorio2", "aleatorio2", "aleatorio2@gmail.com", "aleatorio2", " "));
-        HttpEntity<Usuario> corpoRequisicao = new HttpEntity<>(new Usuario(0L,"aleatorio2", "aleatorio2", "aleatorio2@gmail.com", "aleatorio2", " "));
-        ResponseEntity<Usuario> corpoResposta = testRestTemplate.exchange("/usuarios/cadastrar",HttpMethod.POST, corpoRequisicao,Usuario.class);
-        assertEquals(HttpStatus.BAD_REQUEST,corpoResposta.getStatusCode());
+        HttpEntity<Usuario> corpoRequisicao = new HttpEntity<>(new Usuario(0L, "aleatorio2", "aleatorio2", "aleatorio2@gmail.com", "aleatorio2", " "));
+        ResponseEntity<Usuario> corpoResposta = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        assertEquals(HttpStatus.BAD_REQUEST, corpoResposta.getStatusCode());
     }
+
     @Test
     @DisplayName("atualizar um usuario")
-    public  void deveAtualizarUsuario(){
-        Optional<Usuario> usuarioCadastrado = usuarioService.cadastrarUsuario(new Usuario(0L,"aleatorio3", "aleatorio3", "aleatorio3@gmail.com", "aleatorio3", " "));
-        Usuario usuarioAtualizar = new Usuario(usuarioCadastrado.get().getId(), "aleatorio3Atualizado", "aleatorio3", "aleatorio3@gmail.com", "aleatorio3","");
+    public void deveAtualizarUsuario() {
+        Optional<Usuario> usuarioCadastrado = usuarioService.cadastrarUsuario(new Usuario(0L, "aleatorio3", "aleatorio3", "aleatorio3@gmail.com", "aleatorio3", " "));
+        Usuario usuarioAtualizar = new Usuario(usuarioCadastrado.get().getId(), "aleatorio3Atualizado", "aleatorio3", "aleatorio3@gmail.com", "aleatorio3", "");
         HttpEntity<Usuario> corpoRequisicao = new HttpEntity<>(usuarioAtualizar);
         ResponseEntity<Usuario> corpoResposta = testRestTemplate
                 .withBasicAuth("rootroot", "rootsenha")
-                .exchange("/usuarios/atualizar",HttpMethod.PUT,corpoRequisicao,Usuario.class);
+                .exchange("/usuarios/atualizar", HttpMethod.PUT, corpoRequisicao, Usuario.class);
         assertEquals(HttpStatus.OK, corpoResposta.getStatusCode());
 
     }
+
     @Test
     @DisplayName("listar todos os usuarios")
-    public void deveListarTodosUsuarios(){
-        usuarioService.cadastrarUsuario(new Usuario(0L,"aleatorio4", "aleatorio4", "aleatorio4@gmail.com", "aleatorio4", " "));
-        usuarioService.cadastrarUsuario(new Usuario(0L,"aleatorio5", "aleatorio5", "aleatorio5@gmail.com", "aleatorio5", " "));
+    public void deveListarTodosUsuarios() {
+        usuarioService.cadastrarUsuario(new Usuario(0L, "aleatorio4", "aleatorio4", "aleatorio4@gmail.com", "aleatorio4", " "));
+        usuarioService.cadastrarUsuario(new Usuario(0L, "aleatorio5", "aleatorio5", "aleatorio5@gmail.com", "aleatorio5", " "));
         ResponseEntity<String> resposta = testRestTemplate
                 .withBasicAuth("rootroot", "rootsenha")
-                .exchange("/usuarios/all",HttpMethod.GET, null,String.class);
+                .exchange("/usuarios/all", HttpMethod.GET, null, String.class);
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
     }
 
+    @Test
+    @DisplayName("deletar usuario se existir")
+    public void deveDarNotFoundSeNaoEncontrarUsuarioParaDeletar() {
+        usuarioService.cadastrarUsuario(new Usuario(0L, "aleatorio4", "aleatorio4", "aleatorio4@gmail.com", "aleatorio4", " "));
+        usuarioService.cadastrarUsuario(new Usuario(0L, "aleatorio5", "aleatorio5", "aleatorio5@gmail.com", "aleatorio5", " "));
+        ResponseEntity<String> resposta = testRestTemplate
+                .withBasicAuth("rootroot", "rootsenha")
+                .exchange("/usuarios/deletar/500", HttpMethod.DELETE ,null, String.class);
+        assertEquals(HttpStatus.NOT_FOUND,resposta.getStatusCode());
+    }
 }
