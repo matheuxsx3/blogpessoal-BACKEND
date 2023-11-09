@@ -78,6 +78,7 @@ public class UsuarioService {
                 usuarioLogin.get().setNome(usuario.get().getNome());
                 usuarioLogin.get().setFoto(usuario.get().getFoto());
                 usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
+                usuarioLogin.get().setUsuario(usuario.get().getUsuario());
                 usuarioLogin.get().setSenha("");
 
                 // Retorna o Objeto preenchido

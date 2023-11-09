@@ -3,7 +3,6 @@ package com.example.blogpessoal.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,17 +16,11 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "nomeUsuario não pode ser nula")
-    @Size(min = 2, max = 50, message = "nomeUsuario deve conter de 2 a 50 caracteres.")
     private String nome;
-    @NotBlank(message = "apelidoUsuario não pode ser nula")
-    @Size(min = 2, max = 50, message = "apelidoUsuario deve conter de 2 a 50 caracteres.")
-    private String usuario;
     @Schema(example = "email@email.com")
-    @Email
-    @NotNull(message = "emailUsuario não pode ser nula")
-    private String email;
+    @NotNull(message = "usuario não pode ser nula")
+    private String usuario;
     @NotBlank(message = "senha não pode ser nula")
-    @Size(min = 6, max = 255, message = "Senha deve conter de 6 a 255 caracteres.")
     private String senha;
     @Size(max = 5000, message = "a foto não pode ultrapassar 5000 caracteres")
     private String foto;
@@ -36,16 +29,14 @@ public class Usuario {
     @JsonIgnoreProperties("idUsuario")
     private List<Postagem> postagens;
 
-    public Usuario(Long id, String nome, String usuario, String email, String senha, String foto) {
+    public Usuario(Long id, String nome, String usuario, String senha, String foto) {
         this.id = id;
         this.nome = nome;
         this.usuario = usuario;
-        this.email = email;
         this.senha = senha;
         this.foto = foto;
     }
     public Usuario(){}
-
     public Long getId() {
         return id;
     }
@@ -69,15 +60,6 @@ public class Usuario {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getSenha() {
         return senha;
     }
